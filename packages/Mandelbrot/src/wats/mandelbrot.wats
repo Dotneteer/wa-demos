@@ -1,0 +1,79 @@
+const uint WIDTH = 1200;
+const uint HEIGHT = 800;
+const uint MAX_ITERS = 2048;
+
+uint[WIDTH * HEIGHT] image;
+uint[MAX_ITERS] redChannel;
+uint[MAX_ITERS] greenChannel;
+uint[MAX_ITERS] blueChannel;
+
+// Implements the Mandelbrot calculation
+export void mandelbrot(double cx, double cy, double diameter) {
+  local int x;
+  local int y = 0;
+  local double verticalDiameter = diameter * HEIGHT / WIDTH;
+  local double initialRx = cx + diameter * -WIDTH / WIDTH;
+  local double rx = initialRx;
+  local double ry = cy + verticalDiameter * double(1 - HEIGHT) / HEIGHT;
+  local double stepX = diameter / WIDTH;
+  local double stepY = verticalDiameter / HEIGHT;
+  local *uint ptr = &image;
+  initColors();
+  while (y < HEIGHT) {
+    x = 0;
+    rx = initialRx;
+    while (x < WIDTH) {
+        local int iterations = iterateEquation(rx, ry);
+        if (iterations == MAX_ITERS) {
+          *ptr = 0xff000000;
+        } else {
+          *ptr = 0xff000000
+            | blueChannel[iterations]
+            | greenChannel[iterations]
+            | redChannel[iterations];
+        }
+        rx += stepX;
+        x += 1;
+        ptr += 1;
+    }
+    ry += stepY;
+    y += 1;    
+  }
+}
+
+int iterateEquation(double x0, double y0) {
+  local double a;
+  local double b;
+  local double rx;
+  local double ry;
+  local int iterations;
+  while ((iterations < MAX_ITERS) & (rx * rx + ry * ry <= 4.0)) {
+    rx = a * a - b * b + x0;
+    ry = 2.0 * a * b + y0;
+    a = rx;
+    b = ry;
+    iterations += 1;
+  }
+  return iterations;
+}
+
+void initColors() {
+  local int counter = 0;
+  while (counter < MAX_ITERS) {
+    redChannel[counter] = color(counter, 0);
+    greenChannel[counter] = color(counter, 128) << 8;
+    blueChannel[counter] = color(counter, 356) << 16;
+    counter += 1;
+  }
+}
+
+u8 color(int iteration, int offset) {
+  iteration = ((iteration * 4) + offset) % 1024;
+  if (iteration < 256) {
+    return iteration;
+  }
+  if (iteration < 512) {
+    return 511 - iteration;
+  }
+  return 0;
+}

@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "allowSyntheticDefaultImports": true,
+      "experimentalDecorators": true,
+      "module": "commonjs",
+      "target": "es6",
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "strictNullChecks": false,
+      "sourceMap": true,
+      "baseUrl": ".",
+      "outDir": "../build",
+      "downlevelIteration": true,
+      "paths": {
+        "*": ["node_modules/*"]
+      }
+    },
+    "exclude": ["node_modules"]
+  }
+  

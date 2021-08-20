@@ -1,0 +1,27 @@
+{
+  "name": "hello-wa",
+  "version": "1.0.0",
+  "description": "Hello from WebAssembly app",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dotneteer/wa-demos.git"
+  },
+  "scripts": {
+    "build": "tpwatson ./src/wats/mandelbrot.wats ./build/mandelbrot.wat && wat2wasm ./build/mandelbrot.wat -o ./build/mandelbrot.wasm && tsc -p ./src",
+    "open": "http-server -a localhost -p 3131 -o /src",
+    "start": "npm run build && npm run open"
+  },
+  "keywords": [
+    "WebAssembly",
+    "WA"
+  ],
+  "author": "Istvan Novak",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^13.0.0",
+    "tpwatson": "file:../../../watson",
+    "typescript": "^4.3.5",
+    "wat2wasm": "^3.0.0"
+  }
+}
