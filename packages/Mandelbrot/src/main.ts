@@ -14,7 +14,7 @@ let instance: WebAssembly.Instance | null = null;
         },
       })
     ).instance;
-    // document.getElementById("container").textContent = value;
+    (instance.exports as any).initColors();
 
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
@@ -29,11 +29,7 @@ let instance: WebAssembly.Instance | null = null;
     };
 
     const start = performance.now();
-    (instance.exports as any).mandelbrot(
-      config.x,
-      config.y,
-      config.d
-    );
+    (instance.exports as any).mandelbrot(config.x, config.y, config.d);
     const end = performance.now();
     console.log(`Execution time: ${end - start}`);
     const imgData = ctx.createImageData(WIDTH, HEIGHT);

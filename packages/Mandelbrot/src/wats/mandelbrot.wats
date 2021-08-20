@@ -1,11 +1,9 @@
 const uint WIDTH = 1200;
 const uint HEIGHT = 800;
-const uint MAX_ITERS = 2048;
+const uint MAX_ITERS = 512;
 
-uint[WIDTH * HEIGHT] image;
-uint[MAX_ITERS] redChannel;
-uint[MAX_ITERS] greenChannel;
-uint[MAX_ITERS] blueChannel;
+u8[WIDTH * HEIGHT * 4] image;
+uint[MAX_ITERS + 1] colorTable;
 
 // Implements the Mandelbrot calculation
 export void mandelbrot(double cx, double cy, double diameter) {
@@ -18,20 +16,12 @@ export void mandelbrot(double cx, double cy, double diameter) {
   local double stepX = diameter / WIDTH;
   local double stepY = verticalDiameter / HEIGHT;
   local *uint ptr = &image;
-  initColors();
   while (y < HEIGHT) {
     x = 0;
     rx = initialRx;
     while (x < WIDTH) {
         local int iterations = iterateEquation(rx, ry);
-        if (iterations == MAX_ITERS) {
-          *ptr = 0xff000000;
-        } else {
-          *ptr = 0xff000000
-            | blueChannel[iterations]
-            | greenChannel[iterations]
-            | redChannel[iterations];
-        }
+        *ptr = colorTable[iterations];
         rx += stepX;
         x += 1;
         ptr += 1;
@@ -57,14 +47,16 @@ int iterateEquation(double x0, double y0) {
   return iterations;
 }
 
-void initColors() {
+export void initColors() {
   local int counter = 0;
   while (counter < MAX_ITERS) {
-    redChannel[counter] = color(counter, 0);
-    greenChannel[counter] = color(counter, 128) << 8;
-    blueChannel[counter] = color(counter, 356) << 16;
+    colorTable[counter] = 0xff000000
+     | (color(counter, 356) << 16)
+     | (color(counter, 128) << 8)
+     | color(counter, 0);
     counter += 1;
   }
+  colorTable[MAX_ITERS] = 0xff000000;
 }
 
 u8 color(int iteration, int offset) {
