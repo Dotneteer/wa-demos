@@ -1,7 +1,6 @@
 const uint WIDTH = 1200;
 const uint HEIGHT = 800;
 const uint MAX_ITERS = 512;
-const i64 fp4 = i64(4.0 * (1 << 24));
 
 u8[WIDTH * HEIGHT * 4] image;
 uint[MAX_ITERS + 1] colorTable;
@@ -33,16 +32,14 @@ export void mandelbrot(double cx, double cy, double diameter) {
 }
 
 int iterateEquation(double x0, double y0) {
-  local i64 a;
-  local i64 b;
-  local i64 rx;
-  local i64 ry;
-  local i64 x0fp = toFixPoint(x0);
-  local i64 y0fp = toFixPoint(y0);
+  local double a;
+  local double b;
+  local double rx;
+  local double ry;
   local int iterations;
-  while ((iterations < MAX_ITERS) & (fixPointMultiply(rx, rx) + fixPointMultiply(ry, ry) <= fp4)) {
-    rx = fixPointMultiply(a, a) - fixPointMultiply(b, b) + x0fp;
-    ry = fixPointMultiply(a, b) * 2 + y0fp;
+  while ((iterations < MAX_ITERS) & (rx * rx + ry * ry <= 4.0)) {
+    rx = a * a - b * b + x0;
+    ry = 2.0 * a * b + y0;
     a = rx;
     b = ry;
     iterations += 1;
@@ -71,12 +68,4 @@ u8 color(int iteration, int offset) {
     return 511 - iteration;
   }
   return 0;
-}
-
-inline i64 toFixPoint(double value) {
-  return i64(value * (1 << 24));
-}
-
-inline i64 fixPointMultiply(i64 a, i64 b) {
-  return (a * b) >> 24;
 }
