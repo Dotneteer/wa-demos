@@ -1,0 +1,41 @@
+const uint WIDTH = 1200;
+const uint HEIGHT = 800;
+
+u8[WIDTH * HEIGHT * 4] image;
+
+// Use 32-bit addressing
+export void image1() {
+  local int x;
+  local int y;
+  local *uint ptr = &image;
+  y = 0;
+  while (y < HEIGHT) {
+    x = 0;
+    while (x < WIDTH) {
+      x += 1;
+      *ptr = 0xff000000 | u8(x+y) << 16 | u8(x-y);
+      ptr += 1;
+    }
+    y += 1;    
+  }
+}
+
+// Use 8-bit addressing
+export void image2() {
+  local int x;
+  local int y;
+  local int addr = 0;
+  y = 0;
+  while (y < HEIGHT) {
+    x = 0;
+    while (x < WIDTH) {
+      x += 1;
+      image[addr] = 0x00;
+      image[addr + 1] = x-y;
+      image[addr + 2] = x+y;
+      image[addr + 3] = 0xff;
+      addr += 4;
+    }
+    y += 1;    
+  }
+}
