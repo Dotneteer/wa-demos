@@ -8,7 +8,7 @@
     "url": "https://github.com/Dotneteer/wa-demos.git"
   },
   "scripts": {
-    "build": "tpwatson ./src/wats/mandelbrot.wats ./build/mandelbrot.wat && wat2wasm ./build/mandelbrot.wat -o ./build/mandelbrot.wasm && tsc -p ./src",
+    "build": "tpwatson ./src/wats/memory.wats ./build/memory.wat && wat2wasm ./build/memory.wat -o ./build/memory.wasm && tsc -p ./src",
     "open": "http-server -a localhost -p 3131 -o /src",
     "start": "npm run build && npm run open"
   },
