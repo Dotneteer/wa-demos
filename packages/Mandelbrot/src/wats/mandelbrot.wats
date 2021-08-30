@@ -1,7 +1,8 @@
 const uint WIDTH = 1200;
 const uint HEIGHT = 800;
 const uint MAX_ITERS = 512;
-const i64 fp4 = i64(4.0 * (1 << 24));
+const uint FRAC_BITS = 28;
+const i64 fp4 = i64(4.0 * (1 << FRAC_BITS));
 
 u8[WIDTH * HEIGHT * 4] image;
 uint[MAX_ITERS + 1] colorTable;
@@ -74,9 +75,9 @@ u8 color(int iteration, int offset) {
 }
 
 inline i64 toFixPoint(double value) {
-  return i64(value * (1 << 24));
+  return i64(value * (1 << FRAC_BITS));
 }
 
 inline i64 fixPointMultiply(i64 a, i64 b) {
-  return (a * b) >> 24;
+  return (a * b) >> FRAC_BITS;
 }
