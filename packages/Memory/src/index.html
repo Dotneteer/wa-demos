@@ -3,19 +3,69 @@
   <head>
     <title>Using linear memory</title>
     <style>
-      h1 {
+      body {
         font-family: sans-serif;
+      }
+      div {
+        display: flex;
+      }
+      pre {
+        font-size: 24px;
       }
     </style>
   </head>
   <body>
     <h1>Using Linear Memory (1200 x 800/32-bit)</h1>
-    <canvas id="canvas1" width="1200" height="800" style="width: 400px; height: 266px"></canvas>
-    <h3 id="label1"></h3>
-    <canvas id="canvas2" width="1200" height="800" style="width: 400px; height: 266px"></canvas>
-    <h3 id="label2"></h3>
-    <canvas id="canvas3" width="1200" height="800" style="width: 400px; height: 266px"></canvas>
-    <h3 id="label3"></h3>
+    <div>
+      <canvas
+        id="canvas1"
+        width="1200"
+        height="800"
+        style="width: 400px; height: 266px"
+      ></canvas>
+      <pre>
+  // WAT#
+  u32 image[WIDTH * HEIGHT];
+  
+  image[addr] = 0xff000000 | u8(x+y) << 16 | u8(x-y);
+      </pre>
+    </div>
+    <h2 id="label1"></h2>
+    <div>
+      <canvas
+        id="canvas2"
+        width="1200"
+        height="800"
+        style="width: 400px; height: 266px"
+      ></canvas>
+      <pre>
+  // WAT#
+  u8 image[WIDTH * HEIGHT * 4];
+
+  image[addr] = 0x00;
+  image[addr + 1] = x-y;
+  image[addr + 2] = x+y;
+  image[addr + 3] = 0xff;
+    </pre
+      >
+    </div>
+    <h2 id="label2"></h2>
+    <div>
+      <canvas
+        id="canvas3"
+        width="1200"
+        height="800"
+        style="width: 400px; height: 266px"
+      ></canvas>
+      <pre>
+  // JavaScript
+  image[addr] = (x+y) & 0xff;
+  image[addr + 1] = (x-y) & 0xff;
+  image[addr + 2] = 0;
+  image[addr + 3] = 0xff;</pre
+      >
+    </div>
+    <h2 id="label3"></h2>
     <script src="/build/main.js"></script>
   </body>
 </html>

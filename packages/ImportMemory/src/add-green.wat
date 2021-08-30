@@ -1,10 +1,12 @@
 (module
   (memory (import "js" "mem") 1)
+  (func $trace (import "js" "trace"))
   (export "addGreen" (func $addGreen))
 
   (func $addGreen 
     (local $index i32)
     (local $address i32)
+    call $trace
     i32.const 40000
     set_local $index
     loop $pixels
