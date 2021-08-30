@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Usin Imported memory</title>
+    <title>Using Imported memory</title>
     <style>
-      h1 {
+      body {
         font-family: sans-serif;
       }
     </style>
   </head>
   <body>
-    <h1>Using Imported Memory</h1>
     <div>
-      <div><button onclick="initShape()">Init shape</button></div>
-      <div><canvas id="canvas1" width="200" height="200"></canvas></div>
+      <h3>
+        Shared memory contents <button onclick="initShape()">Init shape</button>
+      </h3>
+      <canvas id="canvas1" width="200" height="200"></canvas>
     </div>
     <div>
-      <div><button onclick="addRed()">Add Red</button></div>
-      <div><canvas id="canvas2" width="200" height="200"></canvas></div>
+      <h3>Red module contents <button onclick="addRed()">Add Red</button></h3>
+      <canvas id="canvas2" width="200" height="200"></canvas>
     </div>
     <div>
-      <div><button onclick="addGreen()">Add Green</button></div>
-      <div><canvas id="canvas3" width="200" height="200"></canvas></div>
+      <h3>
+        Green module contents <button onclick="addGreen()">Add Green</button>
+      </h3>
+      <canvas id="canvas3" width="200" height="200"></canvas>
     </div>
     <div>
-      <div><button onclick="addBlue()">Add Blue</button></div>
-      <div><canvas id="canvas4" width="200" height="200"></canvas></div>
+      <h3>
+        Blue module contents <button onclick="addBlue()">Add Blue</button>
+      </h3>
+      <canvas id="canvas4" width="200" height="200"></canvas>
     </div>
     <script src="/build/main.js"></script>
   </body>

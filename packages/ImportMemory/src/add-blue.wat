@@ -1,5 +1,5 @@
 (module
-  (memory (export "memory") 20)
+  (memory (import "js" "mem") 1)
   (export "addBlue" (func $addBlue))
 
   (func $addBlue

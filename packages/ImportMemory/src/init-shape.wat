@@ -1,5 +1,5 @@
 (module
-  (memory (export "memory") 20)
+  (memory (import "js" "mem") 0)
   (export "initShape" (func $initShape))
 
   (func $initShape 
