@@ -1,0 +1,30 @@
+{
+  "name": "hello-wa",
+  "version": "1.0.0",
+  "description": "Hello from WebAssembly app",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dotneteer/wa-demos.git"
+  },
+  "scripts": {
+    "build:init-shape": "tsc -p ./src && wat2wasm ./src/init-shape.wat -o ./build/init-shape.wasm",
+    "build:add-red": "tsc -p ./src && wat2wasm ./src/add-red.wat -o ./build/add-red.wasm",
+    "build:add-green": "tsc -p ./src && wat2wasm ./src/add-green.wat -o ./build/add-green.wasm",
+    "build:add-blue": "tsc -p ./src && wat2wasm ./src/add-blue.wat -o ./build/add-blue.wasm",
+    "build": "npm run build:init-shape && npm run build:add-red && npm run build:add-green && npm run build:add-blue",
+    "open": "http-server -a localhost -p 3131 -o /src",
+    "start": "npm run build && npm run open"
+  },
+  "keywords": [
+    "WebAssembly",
+    "WA"
+  ],
+  "author": "Istvan Novak",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^13.0.0",
+    "typescript": "^4.3.5",
+    "wat2wasm": "^3.0.0"
+  }
+}
