@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc -p ./src && wat2wasm ./src/hello.wat -o ./build/hello.wasm",
-    "open": "http-server -a localhost -p 3131 -o /src",
+    "open": "http-server -a localhost -c -1 -p 3131 -o /src",
     "start": "npm run build && npm run open"
   },
   "keywords": [

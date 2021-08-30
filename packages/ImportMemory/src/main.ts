@@ -13,24 +13,44 @@ let module4: WebAssembly.Instance;
   const response1 = await fetch("/build/init-shape.wasm");
   const wasmBinary1 = await response1.arrayBuffer();
   module1 = (
-    await WebAssembly.instantiate(wasmBinary1, { js: { mem: memory } })
+    await WebAssembly.instantiate(wasmBinary1, {
+      js: {
+        mem: memory,
+        trace: () => log("Initialize the shape"),
+      },
+    })
   ).instance;
   (module1.exports as any).initShape();
   displaySharedShape();
   const response2 = await fetch("/build/add-red.wasm");
   const wasmBinary2 = await response2.arrayBuffer();
   module2 = (
-    await WebAssembly.instantiate(wasmBinary2, { js: { mem: memory } })
+    await WebAssembly.instantiate(wasmBinary2, {
+      js: {
+        mem: memory,
+        trace: () => log("Increment the red component"),
+      },
+    })
   ).instance;
   const response3 = await fetch("/build/add-green.wasm");
   const wasmBinary3 = await response3.arrayBuffer();
   module3 = (
-    await WebAssembly.instantiate(wasmBinary3, { js: { mem: memory } })
+    await WebAssembly.instantiate(wasmBinary3, {
+      js: {
+        mem: memory,
+        trace: () => log("Increment the green component"),
+      },
+    })
   ).instance;
   const response4 = await fetch("/build/add-blue.wasm");
   const wasmBinary4 = await response4.arrayBuffer();
   module4 = (
-    await WebAssembly.instantiate(wasmBinary4, { js: { mem: memory } })
+    await WebAssembly.instantiate(wasmBinary4, {
+      js: {
+        mem: memory,
+        trace: () => log("Increment the blue component"),
+      },
+    })
   ).instance;
 })();
 
@@ -80,4 +100,9 @@ function addBlue() {
   imgData.data.set(linearMemory);
   ctx.putImageData(imgData, 0, 0);
   displaySharedShape();
+}
+
+function log(message: string) {
+  const label = document.getElementById("log") as HTMLHeadElement;
+  label.textContent = message;
 }

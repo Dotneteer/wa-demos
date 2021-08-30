@@ -1,20 +1,21 @@
 const uint WIDTH = 1200;
 const uint HEIGHT = 800;
 
-u8[WIDTH * HEIGHT * 4] image;
+u8[WIDTH * HEIGHT * 4] image8;
+u32[WIDTH * HEIGHT] image32 { image8 };
 
 // Use 32-bit addressing
 export void image1() {
   local int x;
   local int y;
-  local *uint ptr = &image;
+  local int addr = 0;
   y = 0;
   while (y < HEIGHT) {
     x = 0;
     while (x < WIDTH) {
       x += 1;
-      *ptr = 0xff000000 | u8(x+y) << 16 | u8(x-y);
-      ptr += 1;
+      image32[addr] = 0xff000000 | u8(x+y) << 16 | u8(x-y);
+      addr += 1;
     }
     y += 1;    
   }
@@ -30,10 +31,10 @@ export void image2() {
     x = 0;
     while (x < WIDTH) {
       x += 1;
-      image[addr] = 0x00;
-      image[addr + 1] = x-y;
-      image[addr + 2] = x+y;
-      image[addr + 3] = 0xff;
+      image8[addr] = 0x00;
+      image8[addr + 1] = x-y;
+      image8[addr + 2] = x+y;
+      image8[addr + 3] = 0xff;
       addr += 4;
     }
     y += 1;    

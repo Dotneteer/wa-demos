@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tpwatson ./src/wats/mandelbrot.wats ./build/mandelbrot.wat && wat2wasm ./build/mandelbrot.wat -o ./build/mandelbrot.wasm && tsc -p ./src",
-    "open": "http-server -a localhost -p 3131 -o /src",
+    "open": "http-server -a localhost -c -1 -p 3131 -o /src",
     "start": "npm run build && npm run open"
   },
   "keywords": [

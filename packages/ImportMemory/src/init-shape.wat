@@ -1,9 +1,12 @@
 (module
   (memory (import "js" "mem") 0)
+  (func $trace (import "js" "trace"))
+
   (export "initShape" (func $initShape))
 
   (func $initShape 
     (local $index i32)
+    call $trace
     i32.const 40000
     set_local $index
     loop $pixels

@@ -10,7 +10,6 @@ let instance: WebAssembly.Instance | null = null;
       await WebAssembly.instantiate(wasmBinary, {
         imports: {
           trace: (arg: number) => console.log(arg),
-          traced: (arg: number) => console.log(arg),
         },
       })
     ).instance;
